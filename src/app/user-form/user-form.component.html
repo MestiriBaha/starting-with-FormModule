@@ -1,0 +1,103 @@
+<link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
+
+<div class="container">
+<h2> User Settings </h2>
+  <form #variable="ngForm" (ngSubmit)="onSubmit(variable)">
+    <div class="form-group">
+      <label for="name"> Name : </label>
+      <input REQUIRED minlength="5" autocomplete="off" [(ngModel)]="userSettings.name" id="name" name="name" class="form-control"
+        #property="ngModel" (blur)="onBlur(property)"
+        [class.error]="variable.submitted && property.invalid">
+
+      <!--<h6>dirty : {{property.dirty}}</h6>
+      <h6>pristine : {{property.pristine}}</h6>
+      <h6>touched : {{property.touched}}</h6>
+      <h6>untouched : {{property.untouched}}</h6>
+      <h6>valid : {{property.valid}}</h6>-->
+      <h6>invalid : {{property.invalid}}</h6>
+      <div [hidden]="variable.submitted || property.valid"
+           class="alert alert-danger">
+        Enter a Name
+      </div>
+
+      <div>
+        <button type="button" class="btn btn-primary" name="singleModel"
+                [(ngModel)]="singleModel" btnCheckbox
+                btnCheckboxTrue="On" btnCheckboxFalse="Off">
+          {{singleModel}}
+        </button>
+      </div>
+
+
+
+    </div>
+    <div class="form-check form-group">
+      <input [(ngModel)]="userSettings.AcceptTerms" name="accept the terms " class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">
+        Accept Our Terms
+      </label>
+    </div>
+    <br>
+    <div>
+      <label for="startDate" > Start Date </label>
+      <input type="text" id="startDate" placeholder="startDate" class="form-control" name="startDate"
+             bsDaterangepicker  >
+    </div>
+    <div> start date {{startDate}}</div>
+    <div class="form-group">
+      <label for="startTime">Start Time</label>
+      <Timepicker [(ngModel)]="startTime" id="startTime" name="startTime"></Timepicker>
+
+    </div>
+    <br>
+    <h2>User Interface Style </h2><br>
+    <div class="btn-group">
+      <label class="btn btn-primary" [(ngModel)]="userSettings.radioStyle" name="radioStyle"
+             btnRadio="dark" tabindex="0" role="button">Dark</label>
+      <label class="btn btn-primary" [(ngModel)]="userSettings.radioStyle" name="radioStyle"
+             btnRadio="Middle" tabindex="0" role="button">Middle</label>
+      <label class="btn btn-primary" [(ngModel)]="userSettings.radioStyle" name="radioStyle"
+             btnRadio="light" tabindex="0" role="button">Light</label>
+    </div>
+    <br>
+    <div class="form-group">
+      <label for="exampleFormControlSelect"> Select Your Choice </label>
+      <select [(ngModel)]="userSettings.choice" name="value" class="form-control" id="exampleFormControlSelect">
+        <option *ngFor="let type of subscriptionTypes | async">
+          {{type}}
+        </option>
+
+
+      </select>
+    </div>
+    <br>
+    <div class="form-group">
+      <label > Notes</label>
+      <textarea name="notes" class="form-control" rows="3"></textarea>
+    </div>
+    <br>
+    <div class="form-group">
+      <label for="entry"> Enter Password : </label>
+      <input required maxlength="5" [(ngModel)]="userSettings.password" name="password" type="password" id="entry"
+             placeholder="Password"
+      class="form-control"/>
+    </div>
+    <br><div class="form-group">
+    <label> TEST : </label>
+    <input REQUIRED name="color" type="color" [(ngModel)]="userSettings.color"
+           class="form-control"/>
+  </div>
+    <br>
+    <br>
+    <div [hidden]="!postError" class="alert alert-danger">
+      {{postErrorMessage}}
+    </div>
+
+    <button class="btn btn-danger"> Send  </button>
+  </form>
+</div>
+<h3>{{variable.value | json }}</h3>
+<br>
+<h4>{{OriginaluserSettings | json }}</h4><br><br>
+
+<h2>{{userSettings | json }}</h2>
